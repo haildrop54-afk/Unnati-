@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Date With Me ❤️</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:linear-gradient(145deg,#fff1f6,#ffd9e8,#fff7fa);
+    color:#4b2636;
+    line-height:1.6;
+  }
+  .wrap{max-width:650px;margin:auto;padding:22px 15px 45px}
+  .hero{
+    background:linear-gradient(135deg,#ff7eae,#e94d88);
+    color:white;border-radius:28px;padding:38px 24px;
+    text-align:center;box-shadow:0 14px 35px #d94c7d33;
+  }
+  .heart{font-size:42px}
+  h1{font-size:31px;margin:8px 0}
+  .subtitle{font-size:15px;opacity:.95}
+  .card{
+    background:#ffffffd9;border:1px solid #ffd0df;
+    border-radius:22px;padding:22px;margin-top:16px;
+    box-shadow:0 8px 25px #b83d6712;
+    backdrop-filter:blur(8px);
+  }
+  .section-kicker{font-size:11px;letter-spacing:2.5px;font-weight:800;color:#d65383;margin-bottom:7px}
+  .soft-copy{color:#8d6273;font-size:14px;margin-top:0}
+  .choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:17px}
+  .choice-tile{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:0;padding:15px 13px;border:1px solid #f2c1d3;border-radius:17px;background:linear-gradient(145deg,#fffafd,#fff0f6);min-height:112px;transition:all .18s ease}
+  .choice-tile:has(input:checked){border:2px solid #e84e88;background:linear-gradient(145deg,#ffe0ec,#fff0f6);box-shadow:0 6px 18px #d9367620;transform:translateY(-1px)}
+  .choice-tile input{position:absolute;top:12px;right:11px;margin:0}
+  .choice-emoji{font-size:23px;margin-bottom:3px}
+  .choice-main{font-weight:750;color:#8e2f55;font-size:15px}
+  .choice-sub{font-size:11px;color:#986f80;line-height:1.35}
+  .time-input-label{font-size:13px;font-weight:650;color:#8e2f55;margin:18px 0 8px}
+  .time-input{width:100%;border:1px solid #edb7cb;border-radius:14px;padding:14px;font:inherit;background:#fffafd;outline:none;color:#4b2636}
+  .time-input:focus{border-color:#e84e88;box-shadow:0 0 0 3px #e84e8820}
+  @media(max-width:380px){.choice-grid{grid-template-columns:1fr}.choice-tile{min-height:90px}}
+  h2{font-size:20px;color:#c83c70;margin:0 0 10px}
+  .memory{
+    background:#fff0f5;border-left:4px solid #ed6b98;
+    padding:15px;border-radius:12px;margin:12px 0;
+    font-style:italic;
+  }
+  label{display:block;margin:10px 0;padding:12px 14px;background:#fff7fa;border:1px solid #f4c4d5;border-radius:13px;cursor:pointer}
+  label:hover{background:#ffeaf2}
+  input[type=radio],input[type=checkbox]{accent-color:#e84e88;margin-right:8px}
+  textarea{
+    width:100%;min-height:100px;border:1px solid #edb7cb;
+    border-radius:14px;padding:13px;font:inherit;resize:vertical;
+    background:#fffafd;outline:none;
+  }
+  textarea:focus{border-color:#e84e88;box-shadow:0 0 0 3px #e84e8820}
+  button{
+    width:100%;border:0;border-radius:16px;padding:16px;
+    background:linear-gradient(135deg,#f45b91,#d93676);
+    color:white;font-size:17px;font-weight:700;cursor:pointer;
+    box-shadow:0 10px 25px #d9367630;
+  }
+  .date-card{background:linear-gradient(160deg,#fffafd,#fff0f6)}
+  .soft-note{color:#946477;margin-top:-2px}
+  .date-picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:17px 0 22px}
+  .date-option{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:95px;margin:0;padding:12px 5px;background:#fff;border:1px solid #f1bfd2;border-radius:17px;box-shadow:0 5px 14px #d64a7c0d}
+  .date-option:has(input:checked){background:#ffe0ec;border:2px solid #e84e88;box-shadow:0 5px 16px #e84e8828}
+  .date-option input{position:absolute;top:8px;right:8px;margin:0}
+  .date-number{font-family:Georgia,serif;font-size:30px;line-height:1.2;color:#c83c70}
+  .date-label{font-size:10px;letter-spacing:1.6px;color:#9e647a;margin-top:5px}
+  .time-heading{font-size:17px;font-weight:700;color:#c83c70;margin:6px 0 10px}
+  .time-picks{display:grid;grid-template-columns:1fr;gap:9px}
+  .time-option{display:flex;align-items:center;gap:13px;margin:0;padding:13px 14px;background:#fff;border:1px solid #f4c4d5;border-radius:15px}
+  .time-option:has(input:checked){background:#ffe7f0;border:2px solid #e84e88}
+  .time-option input{margin:0}
+  .time-emoji{font-size:25px;min-width:30px}
+  .time-option b{display:block;color:#673348}
+  .time-option small{display:block;font-size:12px;color:#9a6c7d;margin-top:1px}
+  .custom-time-label{border:0;background:transparent;padding:10px 0 4px;font-weight:600;color:#87435f}
+  .custom-time{width:100%;border:1px solid #edb7cb;border-radius:13px;padding:13px;font:inherit;background:#fffafd;outline:none}
+  .custom-time:focus{border-color:#e84e88;box-shadow:0 0 0 3px #e84e8820}
+  .tiny{text-align:center;color:#8d6273;font-size:13px;margin-top:18px}
+  @media(max-width:390px){.date-picks{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:32px 18px}h1{font-size:28px}}
+  .success{display:none;text-align:center;background:#fff0f5;border-radius:18px;padding:22px;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div class="heart">♡</div>
+    <h1>A Little Date With Me</h1>
+    <div class="subtitle">For Unnati · 9th–13th October</div>
+    <p>I made this because there are some things I want to ask you… and some things I want you to know.</p>
+  </section>
+
+  <form id="dateForm">
+    <div class="card date-card">
+      <div class="section-kicker">OUR LITTLE PLAN</div>
+      <h2>First, let's choose our day 🌷</h2>
+      <p class="soft-copy">Pick the date that feels right for you. I'll be happy just knowing we have a little time together.</p>
+      <div class="choice-grid date-grid">
+        <label class="choice-tile"><input type="radio" name="day" value="9th October"><span class="choice-emoji">🌸</span><span class="choice-main">9 October</span><span class="choice-sub">A little time for us</span></label>
+        <label class="choice-tile"><input type="radio" name="day" value="10th October"><span class="choice-emoji">🌷</span><span class="choice-main">10 October</span><span class="choice-sub">A sweet little date</span></label>
+        <label class="choice-tile"><input type="radio" name="day" value="11th October"><span class="choice-emoji">💗</span><span class="choice-main">11 October</span><span class="choice-sub">Just you and me</span></label>
+        <label class="choice-tile"><input type="radio" name="day" value="12th October"><span class="choice-emoji">🩷</span><span class="choice-main">12 October</span><span class="choice-sub">A memory in the making</span></label>
+        <label class="choice-tile"><input type="radio" name="day" value="13th October"><span class="choice-emoji">🌹</span><span class="choice-main">13 October</span><span class="choice-sub">Our little evening</span></label>
+      </div>
+    </div>
+
+    <div class="card time-card">
+      <div class="section-kicker">TAKE YOUR TIME</div>
+      <h2>When would you like to see me? 🕰️</h2>
+      <p class="soft-copy">Choose the kind of moment you'd enjoy most. No rush — let's make it comfortable for you.</p>
+      <div class="choice-grid time-grid">
+        <label class="choice-tile"><input type="radio" name="timing" value="Morning"><span class="choice-emoji">☀️</span><span class="choice-main">Morning</span><span class="choice-sub">Breakfast and a fresh start</span></label>
+        <label class="choice-tile"><input type="radio" name="timing" value="Afternoon"><span class="choice-emoji">🌼</span><span class="choice-main">Afternoon</span><span class="choice-sub">Lunch and easy conversations</span></label>
+        <label class="choice-tile"><input type="radio" name="timing" value="Evening"><span class="choice-emoji">🌇</span><span class="choice-main">Evening</span><span class="choice-sub">Dinner and a little romance</span></label>
+        <label class="choice-tile"><input type="radio" name="timing" value="Night"><span class="choice-emoji">🌙</span><span class="choice-main">Night</span><span class="choice-sub">A cozy dinner and long talks</span></label>
+        <label class="choice-tile"><input type="radio" name="timing" value="You decide"><span class="choice-emoji">🎀</span><span class="choice-main">Surprise me</span><span class="choice-sub">You can choose the time</span></label>
+      </div>
+      <label class="time-input-label" for="preferred-time">Have a particular time in mind?</label>
+      <input class="time-input" id="preferred-time" type="text" name="preferredTime" placeholder="e.g. 6:30 PM, after work…">
+    </div>
+
+    <div class="card">
+      <h2>2. What should our evening feel like?</h2>
+      <label><input type="radio" name="vibe" value="Fancy"> Something fancy</label>
+      <label><input type="radio" name="vibe" value="Cozy"> Something cozy and comfortable</label>
+      <label><input type="radio" name="vibe" value="New"> Somewhere we've never tried</label>
+      <label><input type="radio" name="vibe" value="Favorite"> Somewhere you already love</label>
+      <label><input type="radio" name="vibe" value="Together"> I don't care where, as long as we're together</label>
+    </div>
+
+    <div class="card">
+      <h2>3. If I'm sitting across from you at dinner and keep looking at you…</h2>
+      <label><input type="radio" name="stare" value="Let me"> Let me ❤️</label>
+      <label><input type="radio" name="stare" value="Maybe"> Maybe</label>
+      <label><input type="radio" name="stare" value="Stop"> Stop staring at me 😂</label>
+      <label><input type="radio" name="stare" value="Secretly like it"> I'll secretly like it</label>
+    </div>
+
+    <div class="card">
+      <h2>4. Do you remember this?</h2>
+      <div class="memory">I still remember when you invited me to your house and made me that great cheese egg sandwich. I don't know if you realize how little things like that stay with me.</div>
+      <textarea name="sandwich" placeholder="What do you remember about that day?"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>5. And the flowers… 🌷</h2>
+      <div class="memory">I remember that day when everywhere I saw flowers, my main thought was that I wanted to give them to you.</div>
+      <label><input type="radio" name="flowers" value="Buy me some"> You better buy me some 🌷</label>
+      <label><input type="radio" name="flowers" value="Prettiest"> Pick the prettiest ones</label>
+      <label><input type="radio" name="flowers" value="Surprise"> Surprise me</label>
+      <label><input type="radio" name="flowers" value="Pretend"> I'll pretend I don't care but I'll love it</label>
+    </div>
+
+    <div class="card">
+      <h2>6. One memory I don't think I'll ever forget</h2>
+      <div class="memory">That day when I was drunk and cried a lot. You wiped my tears and made me eat those pav bhaji. I remember it. ❤️</div>
+      <textarea name="pavbhaji" placeholder="When you think about that day now, what do you remember?"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>7. What do you want from me?</h2>
+      <label><input type="checkbox" name="want" value="Listen"> Someone who listens</label>
+      <label><input type="checkbox" name="want" value="Care"> Someone who cares</label>
+      <label><input type="checkbox" name="want" value="Laugh"> Someone who makes you laugh</label>
+      <label><input type="checkbox" name="want" value="Trust"> Someone you can trust</label>
+      <label><input type="checkbox" name="want" value="Stay"> Someone who stays</label>
+      <label><input type="checkbox" name="want" value="Space"> Someone who gives you space when you need it</label>
+      <label><input type="checkbox" name="want" value="Special"> Someone who makes ordinary days feel special</label>
+    </div>
+
+    <div class="card">
+      <h2>8. Something I want you to know ❤️</h2>
+      <p>I love you a lot. Probably more than you can imagine.</p>
+      <p>I want to keep you in my life. Not by forcing you, not by asking you to become someone you're not. Just by loving you and hoping that someday you'll want to stay too.</p>
+      <textarea name="love" placeholder="What does being loved mean to you?"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>9. If we could keep one memory forever…</h2>
+      <textarea name="memory" placeholder="Which memory of you and me would you never want to forget?"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>10. What should I bring? 🎁</h2>
+      <label><input type="radio" name="gift" value="Flowers"> Flowers</label>
+      <label><input type="radio" name="gift" value="Chocolates"> Chocolates</label>
+      <label><input type="radio" name="gift" value="Something wanted"> Something you've wanted</label>
+      <label><input type="radio" name="gift" value="Handwritten note"> A handwritten note</label>
+      <label><input type="radio" name="gift" value="Surprise"> Surprise me</label>
+    </div>
+
+    <div class="card">
+      <h2>11. The important question</h2>
+      <p>Will you go on a date with me between <b>9th October and 13th October?</b> ❤️</p>
+      <label><input type="radio" name="answer" value="Yes"> Yes ❤️</label>
+      <label><input type="radio" name="answer" value="Yes, but I choose restaurant"> Yes, but I'm choosing the restaurant 😂</label>
+      <label><input type="radio" name="answer" value="Yes, conditions"> Yes, but I have conditions</label>
+      <label><input type="radio" name="answer" value="Think"> Let me think about it</label>
+      <label><input type="radio" name="answer" value="Talk"> I want to talk to you first</label>
+    </div>
+
+    <div class="card">
+      <h2>12. Anything you want to tell me?</h2>
+      <textarea name="final" placeholder="Write anything you want me to know…"></textarea>
+      <br><br>
+      <button type="submit">Send Your Answers ❤️</button>
+      <div class="success" id="success">
+        <h2>Thank you, Unnati ❤️</h2>
+        <p>Your answers are ready. Take a screenshot of this message and send it to me.</p>
+      </div>
+    </div>
+  </form>
+
+  <p class="tiny">Made with a lot of love and a lot of memories. ♡</p>
+</div>
+
+<script>
+document.getElementById('dateForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('success').style.display='block';
+  document.getElementById('success').scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
