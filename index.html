@@ -220,10 +220,34 @@
 </div>
 
 <script>
-document.getElementById('dateForm').addEventListener('submit', function(e){
+document.getElementById('dateForm').addEventListener('submit', function (e) {
   e.preventDefault();
-  document.getElementById('success').style.display='block';
-  document.getElementById('success').scrollIntoView({behavior:'smooth'});
+  var f = e.target, fd = new FormData(f), d = new URLSearchParams();
+  var map = {
+    day: 'Date', timing: 'Time of day', preferredTime: 'Preferred time',
+    vibe: 'Evening vibe', stare: 'Staring at dinner', sandwich: 'Sandwich memory',
+    flowers: 'Flowers', pavbhaji: 'Pav bhaji memory', want: 'Wants from me',
+    love: 'Being loved', memory: 'Forever memory', gift: 'Gift',
+    answer: 'Date answer', final: 'Final message'
+  };
+  Object.keys(map).forEach(function (k) {
+    d.append(map[k], fd.getAll(k).join(', '));
+  });
+  var btn = f.querySelector('button');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  fetch('https://script.google.com/macros/s/AKfycbySNl3UDx8m0__B4437zeLzYGKkgJVQPY6MO-eLPm6BAuisoW4L48EQk4lIxg4qAs_mCQ/exec', {
+    method: 'POST', mode: 'no-cors', body: d
+  }).then(function () {
+    btn.textContent = 'Sent ❤️';
+    var s = document.getElementById('success');
+    s.style.display = 'block';
+    s.scrollIntoView({ behavior: 'smooth' });
+  }).catch(function () {
+    btn.disabled = false;
+    btn.textContent = 'Send Your Answers ❤️';
+    alert('Something went wrong. Please try again.');
+  });
 });
 </script>
 </body>
